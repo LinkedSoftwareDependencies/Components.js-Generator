@@ -7,9 +7,11 @@ import type { ResolutionContext } from '../resolution/ResolutionContext';
  */
 export class PackageMetadataLoader {
   private readonly resolutionContext: ResolutionContext;
+  private readonly prefix?: string;
 
   public constructor(args: PackageMetadataLoaderArgs) {
     this.resolutionContext = args.resolutionContext;
+    this.prefix = args.prefix;
   }
 
   /**
@@ -78,12 +80,14 @@ export class PackageMetadataLoader {
       contexts,
       importPaths,
       typesPath,
+      prefix: this.prefix,
     };
   }
 }
 
 export interface PackageMetadataLoaderArgs {
   resolutionContext: ResolutionContext;
+  prefix?: string;
 }
 
 export interface PackageMetadata {
@@ -94,4 +98,5 @@ export interface PackageMetadata {
   contexts: Record<string, string>;
   importPaths: Record<string, string>;
   typesPath: string;
+  prefix?: string;
 }

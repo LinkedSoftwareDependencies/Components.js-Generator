@@ -25,6 +25,7 @@ export class Generator {
   private readonly ignoreClasses: Record<string, boolean>;
   private readonly typeScopedContexts: boolean;
   private readonly logLevel: LogLevel;
+  private readonly prefix: string;
 
   public constructor(args: GeneratorArgs) {
     this.resolutionContext = args.resolutionContext;
@@ -33,13 +34,15 @@ export class Generator {
     this.ignoreClasses = args.ignoreClasses;
     this.typeScopedContexts = args.typeScopedContexts;
     this.logLevel = args.logLevel;
+    this.prefix = args.prefix;
   }
 
   public async generateComponents(): Promise<void> {
     const logger = ComponentsManagerBuilder.createLogger(this.logLevel);
 
     // Load package metadata
-    const packageMetadata = await new PackageMetadataLoader({ resolutionContext: this.resolutionContext })
+    const packageMetadata = await new PackageMetadataLoader({ resolutionContext: this.resolutionContext,
+      prefix: this.prefix })
       .load(this.pathDestination.packageRootDirectory);
 
     const classLoader = new ClassLoader({ resolutionContext: this.resolutionContext, logger });
@@ -110,4 +113,5 @@ export interface GeneratorArgs {
   ignoreClasses: Record<string, boolean>;
   typeScopedContexts: boolean;
   logLevel: LogLevel;
+  prefix: string;
 }

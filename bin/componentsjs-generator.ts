@@ -16,6 +16,7 @@ Usage:
        -e jsonld               Extension for components files (without .), defaults to 'jsonld'
        -i ignore-classes.json  Relative path to an optional file with class names to ignore
        -l info                 The logger level
+       -r prefix               Prefix of the package, optional
        --help                  Show information about this command
 
   Experimental options:
@@ -39,6 +40,7 @@ if (args.help) {
     fileExtension: args.e || 'jsonld',
     typeScopedContexts: args.typeScopedContexts,
     logLevel: args.l || 'info',
+    prefix: args.r,
     ignoreClasses: args.i ?
       // eslint-disable-next-line no-sync
       JSON.parse(fs.readFileSync(args.i, 'utf8')).reduce((acc: Record<string, boolean>, entry: string) => {
